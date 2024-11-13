@@ -1,0 +1,62 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "configs/renovate-config:default",
+    ":assignee(slehn)"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "webdevops/php-apache-dev"
+      ],
+      "allowedVersions": "= 7.2"
+    },
+    {
+      "matchPackageNames": [
+        "mysql"
+      ],
+      "allowedVersions": "< 8.0"
+    },
+    {
+      "matchPackageNames": [
+        "wpackagist-theme/storefront"
+      ],
+      "allowedVersions": "< 4.6.0"
+    },
+    {
+      "groupName": "wordpress-plugins",
+      "matchPackagePatterns": [
+        "^wpackagist-plugin/",
+        "^wp-cli/"
+      ],
+      "matchPackageNames": [
+        "lucatume/wp-browser"
+      ]
+    },
+    {
+      "groupName": "dev-tools",
+      "matchPackagePatterns": [
+        "^@squizlabs/php_codesniffer",
+        "^@roave/security-advisories"
+      ]
+    },
+    {
+      "groupName": "test-frameworks",
+      "matchPackagePatterns": [
+        "^codeception/"
+      ],
+      "matchPackageNames": [
+        "lucatume/wp-browser",
+        "symfony/phpunit-bridge",
+        "yoast/phpunit-polyfills",
+        "phpcompatibility/phpcompatibility-wp",
+        "phpunit/phpunit",
+        "automattic/vipwpcs"
+      ]
+    }
+  ],
+  "prBodyNotes": [
+    "{{#if isMajor}}:warning: MAJOR MAJOR MAJOR :warning:{{/if}}",
+    ":warning: composer dependencies are only handled for minimum PHP version(PHP 7.2)"
+  ]
+}

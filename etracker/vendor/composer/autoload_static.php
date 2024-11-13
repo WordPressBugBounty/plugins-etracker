@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd36b552c7d2269145c8f5647880437dc
+class ComposerStaticInit9404b181e3f216bf83e45814863defc0
 {
     public static $files = array (
         '97be8d00d4e1b8596dda683609f3dce2' => __DIR__ . '/..' . '/tcdent/php-restclient/restclient.php',
@@ -31,9 +31,9 @@ class ComposerStaticInitd36b552c7d2269145c8f5647880437dc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd36b552c7d2269145c8f5647880437dc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd36b552c7d2269145c8f5647880437dc::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd36b552c7d2269145c8f5647880437dc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9404b181e3f216bf83e45814863defc0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9404b181e3f216bf83e45814863defc0::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9404b181e3f216bf83e45814863defc0::$classMap;
 
         }, null, ClassLoader::class);
     }
