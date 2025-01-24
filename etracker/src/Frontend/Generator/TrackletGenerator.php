@@ -162,6 +162,19 @@ class TrackletGenerator {
 	protected $disable_data_plugin_version;
 
 	/**
+	 * Option enable_ecommerce.
+	 *
+	 * To support ecommerce events, the _etrackerOnReady variable has to be defined.
+	 *
+	 * @since    2.8.0
+	 *
+	 * @access   protected
+	 *
+	 * @var bool $ecommerce_enabled    Enables ecommerce.
+	 */
+	protected $ecommerce_enabled;
+
+	/**
 	 * Constructor for tracklet.
 	 *
 	 * Sets default values for minimal required settings.
@@ -369,6 +382,19 @@ class TrackletGenerator {
 	}
 
 	/**
+	 * Set to true, if ecommerce is enabled.
+	 *
+	 * @param bool $ecommerce_enabled Enable ecommerce.
+	 *
+	 * @return self
+	 */
+	public function set_ecommerce_enabled( bool $ecommerce_enabled ) {
+		$this->ecommerce_enabled = $ecommerce_enabled;
+
+		return $this;
+	}
+
+	/**
 	 * Generate HTML tracklet.
 	 *
 	 * @return string
@@ -377,10 +403,12 @@ class TrackletGenerator {
 		// build and return _etrackerOnReady.
 		$dom = new \DOMDocument( '1.0', 'utf-8' );
 
-		$dom_async_queue = $dom->createElement( 'script' );
-		$js_async_queue  = new \DOMText( 'var _etrackerOnReady = [];' );
-		$dom_async_queue->appendChild( $js_async_queue );
-		$dom->appendChild( $dom_async_queue );
+		if ( $this->ecommerce_enabled ) {
+			$dom_async_queue = $dom->createElement( 'script' );
+			$js_async_queue = new \DOMText( 'var _etrackerOnReady = [];' );
+			$dom_async_queue->appendChild( $js_async_queue );
+			$dom->appendChild( $dom_async_queue );
+		}
 
 		// return empty tracklet if no SecureCode was set.
 		if ( strlen( $this->get_secure_code() ) < 1 ) {

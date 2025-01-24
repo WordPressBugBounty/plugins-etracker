@@ -233,6 +233,25 @@ class Etracker_Main {
 	}
 
 	/**
+	 * Helper function to determine if the woocommerce plugin is enabled.
+	 *
+	 * @since    2.8.0
+	 *
+	 * @access   private
+	 */
+	private function is_woocommerce_plugin_enabled() {
+		$plugins = get_option( 'active_plugins' );
+		if ( ! stripos( json_encode( $plugins ), '/woocommerce.php' ) ) {
+			// Check sitewide plugins (multisite installations).
+			$sitewide_plugins = get_site_option( 'active_sitewide_plugins' );
+			if ( ! stripos( json_encode( $sitewide_plugins ), '/woocommerce.php' ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Register all of the hooks related to the woocommerce plugin.
 	 *
 	 * @since    1.8.0
@@ -240,17 +259,8 @@ class Etracker_Main {
 	 * @access   private
 	 */
 	private function define_ecommerce_hooks() {
-		if ( is_admin() ) {
+		if ( is_admin() || ! $this->is_woocommerce_plugin_enabled() ) {
 			return;
-		}
-
-		$plugins = get_option( 'active_plugins' );
-		if ( ! stripos( json_encode( $plugins ), '/woocommerce.php' ) ) {
-			// Check sitewide plugins (multisite installations).
-			$sitewide_plugins = get_site_option( 'active_sitewide_plugins' );
-			if ( ! stripos( json_encode( $sitewide_plugins ), '/woocommerce.php' ) ) {
-				return;
-			}
 		}
 
 		$plugin_ecommerce_api = new ECommerceAPI();
@@ -319,6 +329,9 @@ class Etracker_Main {
 		);
 		$this->tracklet->set_custom_tracking_domain(
 			$this->get_setting( 'etracker_custom_tracking_domain', '' )
+		);
+		$this->tracklet->set_ecommerce_enabled(
+			$this->is_woocommerce_plugin_enabled()
 		);
 	}
 
