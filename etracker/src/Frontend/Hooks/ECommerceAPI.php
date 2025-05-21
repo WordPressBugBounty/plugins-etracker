@@ -10,6 +10,8 @@
 
 namespace Etracker\Frontend\Hooks;
 
+use \Etracker\Exceptions\WooCommerceImplementationException;
+
 /**
  * ECommerce functions.
  *
@@ -37,8 +39,18 @@ class ECommerceAPI {
 	 * Gets the sku or fallback to product id.
 	 *
 	 * @param WC_Product $product The current product.
+	 * @throws WooCommerceImplementationException If supplied $product is invalid.
 	 */
 	private function get_sku_or_id( $product ) {
+		if ( ! is_object( $product ) ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+			throw new WooCommerceImplementationException( 'Supplied $product is no object: ' . var_export( $product, true ) );
+		}
+
+		if ( ! ( method_exists( $product, 'get_sku' ) && method_exists( $product, 'get_id' ) ) ) {
+			throw new WooCommerceImplementationException( 'Supplied $product is invalid. Class: ' . get_class( $product ) );
+		}
+
 		return ( $product && $product->get_sku() ) ? $product->get_sku() : $product->get_id();
 	}
 
@@ -69,10 +81,20 @@ class ECommerceAPI {
 	 * Gets an etracker product object for a given product.
 	 *
 	 * @param WC_Product $product The current product.
+	 * @throws WooCommerceImplementationException If supplied $product is invalid.
 	 *
 	 * @return array
 	 */
 	private function get_product_object( $product ) {
+		if ( ! is_object( $product ) ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+			throw new WooCommerceImplementationException( 'Supplied $product is no object: ' . var_export( $product, true ) );
+		}
+
+		if ( ! ( method_exists( $product, 'get_title' ) && method_exists( $product, 'get_price' ) ) ) {
+			throw new WooCommerceImplementationException( 'Supplied $product is invalid. Class: ' . get_class( $product ) );
+		}
+
 		return array(
 			'id'       => $this->get_sku_or_id( $product ),
 			'name'     => $product->get_title(),
@@ -84,14 +106,17 @@ class ECommerceAPI {
 
 	/**
 	 * Function for `woocommerce_after_single_product` action-hook.
+	 * 
+	 * @throws WooCommerceImplementationException If global $product is no object. Handled internally.
 	 *
 	 * @return void
 	 */
 	public function handle_view_product() {
 		try {
 			global $product;
-			if ( empty( $product ) ) {
-				return;
+			if ( ! is_object( $product ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+				throw new WooCommerceImplementationException( 'Supplied $product is no object: ' . var_export( $product, true ) );
 			}
 
 			$product_json = json_encode( $this->get_product_object( $product ) );
@@ -106,14 +131,17 @@ class ECommerceAPI {
 
 	/**
 	 * Function for `woocommerce_after_add_to_cart_button` action-hook.
+	 * 
+	 * @throws WooCommerceImplementationException If global $product is no object. Handled internally.
 	 *
 	 * @return void
 	 */
 	public function handle_insert_to_basket() {
 		try {
 			global $product;
-			if ( empty( $product ) ) {
-				return;
+			if ( ! is_object( $product ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+				throw new WooCommerceImplementationException( 'Supplied $product is no object: ' . var_export( $product, true ) );
 			}
 
 			$product_json = json_encode( $this->get_product_object( $product ) );
