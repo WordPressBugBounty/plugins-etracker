@@ -208,6 +208,9 @@ class TrackletGenerator {
 		if ( class_exists( 'WPSEO_Utils' ) ) {
 			return true;
 		}
+		if ( function_exists( 'YoastSEO' ) && method_exists( '\Yoast\WP\SEO\Helpers\Options_Helper', 'get_title_separator' ) ) {
+			return true;
+		}
 		return false;
 	}
 
@@ -228,7 +231,7 @@ class TrackletGenerator {
 			$wpseo_title_sep = YoastSEO()->helpers->options->get_title_separator();
 		} else {
 			// Fallback to old deprecated method call.
-			$wpseo_title_sep = WPSEO_Utils::get_title_separator();
+			$wpseo_title_sep = \WPSEO_Utils::get_title_separator();
 		}
 
 		// Split title at separator.
@@ -241,14 +244,7 @@ class TrackletGenerator {
 	/**
 	 * WordPress filter document_title_parts to query page title.
 	 *
-	 * @param array $title {
-	 *                     The document title parts.
-	 *
-	 * @type string $title   Title of the viewed page.
-	 * @type string $page    Optional. Page number if paginated.
-	 * @type string $tagline Optional. Site description when on home page.
-	 * @type string $site    Optional. Site title when not on home page.
-	 *              }
+	 * @param array $title WordPress title parts.
 	 *
 	 * @return array WordPress title parts.
 	 *
@@ -405,7 +401,7 @@ class TrackletGenerator {
 
 		if ( $this->ecommerce_enabled ) {
 			$dom_async_queue = $dom->createElement( 'script' );
-			$js_async_queue = new \DOMText( 'var _etrackerOnReady = [];' );
+			$js_async_queue  = new \DOMText( 'var _etrackerOnReady = [];' );
 			$dom_async_queue->appendChild( $js_async_queue );
 			$dom->appendChild( $dom_async_queue );
 		}

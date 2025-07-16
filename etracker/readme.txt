@@ -4,11 +4,11 @@ Tags: tracking, analytics, gdpr, dsgvo, woocommerce
 Requires at least: 5.5.0
 Requires PHP: 7.2
 Tested up to: 6.8
-Stable tag: 2.7.5
+Stable tag: 2.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Consent-free, despite ad blockers and tracking prevention: Web analytics, tag and consent management ensuring the highest data quality, ad returns and conversions.
+Consent-free, despite ad blockers and tracking prevention: Web analytics, tag and consent manager for best data quality, ad returns and conversions.
 
 == Description ==
 
@@ -54,6 +54,9 @@ Go to [etracker.com]( https://www.etracker.com/en/signup/ ), start your 30-day n
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.7.6 =
+* Fix: class WPSEO_Utils not found exception
 
 = 2.7.5 =
 * Improved: WooCommerce integration stability through enhanced error handling
