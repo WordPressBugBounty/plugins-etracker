@@ -3,8 +3,8 @@ Contributors: etrackerofficial
 Tags: tracking, analytics, gdpr, dsgvo, woocommerce
 Requires at least: 5.5.0
 Requires PHP: 7.2
-Tested up to: 6.8
-Stable tag: 2.7.6
+Tested up to: 6.9
+Stable tag: 2.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ Go to [etracker.com]( https://www.etracker.com/en/signup/ ), start your 30-day n
 
 == Changelog ==
 
+= 2.7.7 =
+* Support for WordPress 6.9 verified
+
 = 2.7.6 =
 * Fix: class WPSEO_Utils not found exception
 
@@ -77,37 +80,3 @@ Go to [etracker.com]( https://www.etracker.com/en/signup/ ), start your 30-day n
 = 2.7.0 =
 * New: Performance optimization of integrated reporting
 * Fix: PHP 8.2 deprecated warnings
-
-= 2.6.4 =
-* Support for WordPress 6.6 verified
-
-= 2.6.3 =
-* Fix: `/sw.js` rewriting not working if WP_CONTENT_URL has non-default value
-
-= 2.6.2 =
-* Support for WordPress 6.5 verified
-
-= 2.6.1 =
-* Fix: trim off surrounding white spaces from account key
-
-= 2.6.0 =
-* New: etracker redesign (icons, wording, etc.)
-* Fix: etracker column header sort indicators overlap title
-
-= 2.5.0 =
-* New: Requires at least WordPress 5.5.0
-* Fix: PHP 8.2 Dynamic Properties are deprecated warning
-* Chg: Give more details for ClientSessionException
-
-= 2.4.2 =
-* Support for WordPress 6.4 verified
-
-= 2.4.1 =
-* Fix: Fatal error in integrated reporting "Quarter to date" timespan
-
-= 2.4.0 =
-* Support for WordPress 6.3 verified
-* New: Setting to select reporting timespan
-* New: Integrated Reporting enabled checkmark
-* Chg: dismissed notification to enable integrated reporting will be hidden for 30 days
-* Fix: Safari CSS fix integrated reporting column header icon overlaps title
